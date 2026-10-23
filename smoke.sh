@@ -26,8 +26,10 @@ start_chrome() {
     --remote-debugging-port="$CDP_PORT" --no-first-run --no-default-browser-check --disable-dev-shm-usage \
     --disable-gpu --window-size=1280,800 "${SITE_URL}user.html" >"$WORK/chrome.log" 2>&1 &
   CHROME_PID=$!
-  for _ in $(seq 1 50); do curl -fsS -m 1 "$CDP_URL/json/version" >/dev/null 2>&1 && return 0; sleep 0.2; done
-  fail "chrome did not start"
+  # a cold start on a CI runner can take well over 10 s
+  for _ in $(seq 1 120); do curl -fsS -m 1 "$CDP_URL/json/version" >/dev/null 2>&1 && return 0; sleep 0.5; done
+  tail -20 "$WORK/chrome.log" >&2
+  fail "chrome did not start within 60 s"
 }
 
 python3 -m http.server "$SITE_PORT" --bind 127.0.0.1 --directory "$HERE/smoke/site" >"$WORK/site.log" 2>&1 &
