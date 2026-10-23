@@ -1,0 +1,5 @@
+<!doctype html><meta charset="utf-8"><title>task-page</title>
+<style>body{margin:0;font:16px sans-serif} #at{position:absolute;left:100px;top:200px;width:120px;height:40px}</style>
+<h1 id="h">Task page</h1><button id="btn" onclick="document.title=document.title.replace(/-clicked$/,'')+'-clicked'">Normal button</button>
+<button id="at" onclick="document.title='at-'+event.clientX+'x'+event.clientY">Coord button</button>
+<script>const q=new URLSearchParams(location.search).get('t')||'?';document.title='task-'+q;document.getElementById('h').textContent='Task '+q</script>

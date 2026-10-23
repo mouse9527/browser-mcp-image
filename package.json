@@ -1,0 +1,10 @@
+{
+  "name": "browser-mcp-image",
+  "private": true,
+  "description": "chrome-devtools-mcp (unmodified) bridged to Streamable HTTP by mcp-proxy (one upstream process for all sessions)",
+  "license": "MIT",
+  "dependencies": {
+    "chrome-devtools-mcp": "1.12.0",
+    "mcp-proxy": "6.7.21"
+  }
+}
