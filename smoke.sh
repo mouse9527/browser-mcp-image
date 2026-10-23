@@ -38,10 +38,10 @@ echo "ok: chrome $(curl -fsS "$CDP_URL/json/version" | python3 -c 'import json,s
 docker run -d --name "$NAME" --network host --read-only --tmpfs /tmp:uid=1000,gid=1000 \
   -e BROWSER_URL="$CDP_URL" -e MCP_HOST=127.0.0.1 -e MCP_PORT="$MCP_PORT" "$IMG" >/dev/null
 for _ in $(seq 1 60); do
-  docker logs "$NAME" 2>&1 | grep -q "starting server on port" && break
+  docker logs "$NAME" 2>&1 | grep "starting server on port" >/dev/null && break
   sleep 1
 done
-docker logs "$NAME" 2>&1 | grep -q "starting server on port" || fail "server did not start"
+docker logs "$NAME" 2>&1 | grep "starting server on port" >/dev/null || fail "server did not start"
 echo "ok: listening (read-only root, /tmp tmpfs)"
 
 py - <<'PY' || fail "tool list"
